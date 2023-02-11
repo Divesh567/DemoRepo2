@@ -7,7 +7,6 @@ using Photon.Pun;
 public class SquareView : MonoBehaviour
 {
     private static SquareView _instance;
-
     public static SquareView Instance { get { return _instance; } }
     
     private void Awake()
@@ -22,43 +21,37 @@ public class SquareView : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
-
     private SquareController _controller;
     [SerializeField]
     private GameObject _square;
 
-    public Color _color { get; private set; }
-    public string _name { get; private set; }
-    public Vector3 _scale { get; private set; }
+    public Color _color;
+    public string _name;
+    public Vector3 _scale;
 
     private void Start()
     {
-        _controller = new SquareController();
-        _controller.Init(this);
+        _controller = new SquareController(); // creates Controller of square and has acess to it by _controlller
+        _controller.Init(); 
     }
-
-    public void ShowPlayerTurn(string _turn)
+    public void OnRedButtonPressed() 
     {
-        GameMenu.Instance.ShowPlayerTurn(_turn);
+        _controller.PlayerColor = new Color(217, 56, 56, 255); //updates model "Square" through controller
     }
-
-    public void OnRedButtonPressed()
-    {
-        _controller.PlayerColor = new Color(217, 56, 56, 255);
-    }
-
     public void OnBlueButtonPressed()
     {
         _controller.PlayerColor = new Color(56, 56, 217, 255);
     }
-
     public void OnGreenButtonPressed()
     {
         _controller.PlayerColor = new Color(56, 217, 56, 255);
     }
 
-    public void CreatePlayer()
+    public void OnPlayerNameChanged(string name)
+    {
+        _controller.PlayerName = name;
+    }
+    public void CreatePlayer() // provides details of square from model/Controller
     {
         _color = _controller.PlayerColor;
         _scale = _controller.PlayerScale;

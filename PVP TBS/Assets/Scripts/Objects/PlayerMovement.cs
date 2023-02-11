@@ -17,31 +17,35 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (myGameManager.StartGame)
+        if (!myGameManager.StartGame) // Check if game has started
         {
-            if (PhotonNetwork.IsMasterClient && _photonView.IsMine)
-            {
-                if (Input.GetKeyDown(KeyCode.W) && !_isMoving)
-                {
-                    StartCoroutine(MovePlayer(Vector3.forward));
-                }
-                else if (Input.GetKeyDown(KeyCode.S) && !_isMoving)
-                {
-                    StartCoroutine(MovePlayer(Vector3.back));
-                }
-                else if (Input.GetKeyDown(KeyCode.A) && !_isMoving)
-                {
-                    StartCoroutine(MovePlayer(Vector3.left));
-                }
-
-                else if (Input.GetKeyDown(KeyCode.D) && !_isMoving)
-                {
-                    StartCoroutine(MovePlayer(Vector3.right));
-                }
-            }
+            return;
         }
-
-        
+        if (!PhotonNetwork.IsMasterClient && _photonView.IsMine) // check if its your turn
+        {
+            return;
+        }
+        if (_isMoving) //Check if input has been provided and player is moving
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.W)) // if it is your turn and player is not moving wait for input and move
+        {
+            StartCoroutine(MovePlayer(Vector3.forward));
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StartCoroutine(MovePlayer(Vector3.left));
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            StartCoroutine(MovePlayer(Vector3.right));
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StartCoroutine(MovePlayer(Vector3.right));
+        }
+   
     }
 
     IEnumerator MovePlayer(Vector3 _movePos)
