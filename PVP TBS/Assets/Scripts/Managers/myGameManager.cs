@@ -30,7 +30,6 @@ public class myGameManager : MonoBehaviourPunCallbacks
         {
             StartGame = true;
             GameMenu.Instance.ShowWaitingForPlayers(false);
-            GameMenu.Instance.EnablePlayerTurnText();
         }
         else
         {

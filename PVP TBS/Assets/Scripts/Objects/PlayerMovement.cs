@@ -21,31 +21,27 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (!PhotonNetwork.IsMasterClient && _photonView.IsMine) // check if its your turn
+        if (PhotonNetwork.IsMasterClient && _photonView.IsMine && !_isMoving) // check if its your turn
         {
-            return;
+            if (Input.GetKeyDown(KeyCode.W)) // if it is your turn and player is not moving wait for input and move
+            {
+                StartCoroutine(MovePlayer(Vector3.forward));
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                StartCoroutine(MovePlayer(Vector3.left));
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                StartCoroutine(MovePlayer(Vector3.right));
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StartCoroutine(MovePlayer(Vector3.right));
+            }
         }
-        if (_isMoving) //Check if input has been provided and player is moving
-        {
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.W)) // if it is your turn and player is not moving wait for input and move
-        {
-            StartCoroutine(MovePlayer(Vector3.forward));
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(MovePlayer(Vector3.left));
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            StartCoroutine(MovePlayer(Vector3.right));
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            StartCoroutine(MovePlayer(Vector3.right));
-        }
-   
+     
+        
     }
 
     IEnumerator MovePlayer(Vector3 _movePos)

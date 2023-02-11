@@ -28,11 +28,6 @@ public class GameMenu : Menu<GameMenu>
     {
         _waitingForPlayers.SetActive(_show);
     }
-
-    public void EnablePlayerTurnText()
-    {
-        _playerTurn.SetActive(true);
-    }
     public void ShowPlayerTurn(string turnText)
     {
         _playerTurn.GetComponent<TextMeshProUGUI>().text = turnText;   
