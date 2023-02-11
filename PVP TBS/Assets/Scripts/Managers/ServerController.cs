@@ -71,5 +71,14 @@ public class ServerController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel(1);
         MenuManager.Instance.CloseMenu(MainMenu.Instance);
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        {
+            myGameManager.StartGame = true;
+            GameMenu.Instance.ShowWaitingForPlayers(false);
+        }
+        else
+        {
+            GameMenu.Instance.ShowWaitingForPlayers(true);
+        }
     }
 }

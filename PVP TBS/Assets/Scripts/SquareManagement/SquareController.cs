@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class SquareController 
 {
-    private SquareView _view;
     private SquareModel _squareData;
 
-    public void Init(SquareView view)
+    public void Init() // creates square model
     { 
-        _view = view;
-        _squareData = new SquareModel();
+        _squareData = new SquareModel(); 
     }
 
     public string PlayerName
@@ -35,6 +33,4 @@ public class SquareController
         get { return _squareData.Scale; }
         set { _squareData.Scale = value; }
     }
-
-
 }

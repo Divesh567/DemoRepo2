@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class myGameManager : MonoBehaviourPunCallbacks
 {
     private static myGameManager _instance;
-
     public static myGameManager Instance { get { return _instance; } }
 
 
@@ -24,19 +24,16 @@ public class myGameManager : MonoBehaviourPunCallbacks
             DontDestroyOnLoad(gameObject);
         }
     }
-
-    private void Update()
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (!StartGame && PhotonNetwork.CurrentRoom != null)
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        {
+            StartGame = true;
+            GameMenu.Instance.ShowWaitingForPlayers(false);
+        }
+        else
         {
             GameMenu.Instance.ShowWaitingForPlayers(true);
-            if(PhotonNetwork.CurrentRoom.PlayerCount > 1)
-            {
-                StartGame = true;
-                GameMenu.Instance.ShowWaitingForPlayers(false);
-                GameMenu.Instance.EnablePlayerTurnText();
-            }
-            
         }
     }
 }
